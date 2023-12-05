@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Jed Rembold and Eric Roberts">
-  <title>Title</title>
+  <title>Section 13: Final Exam Prep</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -36,15 +36,122 @@
     <div class="slides">
 
 <section id="title-slide">
-  <h1 class="title">Title</h1>
+  <h1 class="title">Section 13: Final Exam Prep</h1>
   <p class="author">Jed Rembold and Eric Roberts</p>
-  <p class="date">Date</p>
+  <p class="date">Week of December 4th</p>
 </section>
 
-<section id="problem-1" class="slide level2">
-<h2>Problem 1</h2>
+<section id="problem-1a-tracing" class="slide level2">
+<h2>Problem 1a: Tracing</h2>
 <ul>
-<li>Is here!</li>
+<li>Trace the below function to determine its output</li>
+</ul>
+<pre ><code class="mypython">def mystery(x, y=10):
+  z = len(x)
+  return x[y:] + enigma(z, 2) * "o"
+
+def enigma(x, z):
+  return x - z ** 2
+
+chill = "Snowman"
+print(mystery(chill, -3))</code></pre>
+</section>
+<section id="problem-1b-tracing" class="slide level2">
+<h2>Problem 1b: Tracing</h2>
+<ul>
+<li>What is printed at the end?</li>
+</ul>
+<pre ><code class="mypython" style="max-height:850px; font-size:.75em;">class Frosty:
+  def __init__(self, n, c):
+    self.wild = [c]
+    self.n = n
+
+  def snowball(self, h=3):
+    self.n -= h
+    self.wild += [self.n]
+
+  def cap(self):
+    return self.wild
+
+f = Frosty(5, 12)
+f.snowball()
+A = f.cap()
+A.append(5)
+print(sum(f.cap())</code></pre>
+</section>
+<section id="problem-2-fundamentals" class="slide level2">
+<h2>Problem 2: Fundamentals</h2>
+<ul>
+<li><p>The Racamán sequence starts at 0, termed <span
+class="math inline">\(a_0\)</span></p></li>
+<li><p>Future values in the sequence are given by:</p>
+<p><span class="math display">\[ a_n = \begin{cases} a_{n-1}-n,
+&amp;\text{if $a_{n-1}-n &gt; 0$ and has not already appeared in the
+sequence} \\ a_{n-1} + n, &amp; \text{otherwise}\end{cases}
+\]</span></p></li>
+<li><p>Thus</p>
+<p><span class="math display">\[ \begin{aligned}
+   a_0 &amp;= 0\\
+   a_1 &amp;= 1\\
+   a_2 &amp;= 3\\
+   a_3 &amp;= 6\\
+   a_4 &amp;= 2\\
+   a_5 &amp;= 7\\
+   \end{aligned} \]</span></p></li>
+</ul>
+</section>
+<section id="problem-2-continued" class="slide level2">
+<h2>Problem 2 continued</h2>
+<ul>
+<li><p>Write a function called <code class="python">racaman(n)</code>
+which takes as an argument a single integer and returns the nth value of
+the Racamán sequence</p>
+<pre ><code class="python-repl">>>> print(racaman(3))
+6
+>>> print(racaman(6))
+13</code></pre></li>
+</ul>
+</section>
+<section id="problem-3-interactive-graphics" class="slide level2">
+<h2>Problem 3: Interactive Graphics</h2>
+<ul>
+<li>The “Fifteen Puzzle” is a sliding puzzle with the numbers 1 through
+15 on a set of square tiles</li>
+<li>One space in open, allowing neighboring tiles to be slide into the
+space</li>
+<li>Goal is to arrange the numbered tiles in order, from upper left to
+bottom right</li>
+</ul>
+</section>
+<section id="problem-3---step-1" class="slide level2">
+<h2>Problem 3 - Step 1</h2>
+<div class="cols">
+<div class="col">
+<ul>
+<li>Write a program to display the starting state of the Fifteen
+Puzzle</li>
+<li>Each piece should be a <code class="python">GCompound</code>
+containing a filled square and a centered number</li>
+<li>Should resemble the image to the right</li>
+</ul>
+</div>
+<div class="col">
+
+</div>
+</div>
+</section>
+<section id="problem-3---step-2" class="slide level2">
+<h2>Problem 3 - Step 2</h2>
+<ul>
+<li>Make the program interactive by having clicking on a piece move it
+to the open space if possible
+<ul>
+<li>Figure out which square you clicked on using
+<code class="python">get_element_at</code></li>
+<li>Check all 4 directions to see if any are both inside the window and
+unoccupied. If that condition is met, move the clicked piece into the
+free space. Otherwise, do nothing.</li>
+</ul></li>
 </ul>
 </section>
     </div>
@@ -64,9 +171,14 @@
   <!--<script src="./js/revealjs/../other_plugins/reveald3/reveald3.js"></script>,-->
   <script src="./js/revealjs/plugin/math/math.js"></script>
   <script src="./js/revealjs/plugin/highlight/highlight.js"></script>
+  <script src="./js/revealjs/../python_language.js"></script>
+
+  // Font Awesome Characters
+  <script src="https://kit.fontawesome.com/4bc05635b0.js" crossorigin="anonymous"></script>
 
   // Code Tracing
   <script src="./js/revealjs/../codetrace.js"></script>
+
 
   <script>
 
@@ -176,6 +288,11 @@
 		  <!--},-->
 		  CommonHTML: {scale: 80},
 		},
+          highlight: {
+            beforeHighlight: hljs => hljs.registerLanguage("mypython", function(hljs) {
+              console.log(mypythondef);
+              return mypythondef(hljs); } )
+          },
         // reveal.js plugins
         plugins: [
 		  RevealMath,
@@ -214,5 +331,17 @@
 		],
       });
     </script>
+  <script>
+  // This is admitedly a very hacky way to achieve my pseudo code highlighting, but it works?
+    function remove_bars() {
+      var pseudoBlocks = document.getElementsByClassName("hljs-pseudo");
+      console.log(pseudoBlocks);
+      for ( var i = 0; i < pseudoBlocks.length; i++) {
+        pseudoBlocks[i].innerHTML = pseudoBlocks[i].innerHTML.replaceAll("\|\|\|", "");
+      }
+      }
+    // omg this is even more hacky now, but I need this to run after hljs has done its thing
+    setTimeout(remove_bars, 100);
+  </script>
     </body>
 </html>
