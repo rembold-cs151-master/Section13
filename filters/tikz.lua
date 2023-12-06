@@ -81,7 +81,7 @@ function RawBlock(el)
 	end
 
 	--local fname = system.get_working_directory() .. '/../images/svg_cache/' ..
-	local fname = '../images/svg_cache/' ..
+	local fname = './images/svg_cache/' ..
         pandoc.sha1(clean_text) .. '.' .. filetype
     if not file_exists(fname) then
       tikz2image(clean_text, filetype, fname)
