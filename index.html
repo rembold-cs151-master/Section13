@@ -16,11 +16,8 @@
     div.columns{display: flex; gap: min(4vw, 1.5em);}
     div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    /* The extra [class] is a hack that increases specificity enough to
-       override a similar rule in reveal.js */
-    ul.task-list[class]{list-style: none;}
+    ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
-      font-size: inherit;
       width: 0.8em;
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
@@ -39,6 +36,11 @@
   <h1 class="title">Section 13: Final Exam Prep</h1>
   <p class="author">Jed Rembold and Eric Roberts</p>
   <p class="date">Week of December 4th</p>
+<div class="titlelinks">
+<a title="Template Repo" href="https://github.com/rembold-cs151-master/Section13"><i class="fa-solid fa-folder-tree"></i></a>
+<a title="Template Zip"  href="https://github.com/rembold-cs151-master/Section13/zipball/master/"><i class="fa-solid fa-file-zipper"></i></a>
+<a title="Questions"     href="https://github.com/rembold-cs151-master/Section13/raw/main/SectionQuestions.pdf"><i class="fa-solid fa-file-pdf"></i></a>
+</div>
 </section>
 
 <section id="problem-1a-tracing" class="slide level2">
@@ -46,7 +48,7 @@
 <ul>
 <li>Trace the below function to determine its output</li>
 </ul>
-<pre ><code class="mypython">def mystery(x, y=10):
+<pre ><code class="mypython" style="max-height:850px; font-size:.8em">def mystery(x, y=10):
   z = len(x)
   return puzzle(x, y) + puzzle(w[:enigma(z, 3)], y)
 
@@ -59,12 +61,17 @@ def puzzle(y, z):
 w = "gingerbread man"
 print(mystery(w, -3))</code></pre>
 </section>
+<section id="problem-1a-pythontutor-trace" class="slide level2">
+<h2>Problem 1a: PythonTutor Trace</h2>
+<iframe width="1600" height="600" frameborder="0" src="https://pythontutor.com/iframe-embed.html#code=def%20mystery%28x,%20y%3D10%29%3A%0A%20%20z%20%3D%20len%28x%29%0A%20%20return%20puzzle%28x,%20y%29%20%2B%20puzzle%28w%5B%3Aenigma%28z,%203%29%5D,%20y%29%0A%0Adef%20enigma%28x,%20w%29%3A%0A%20%20return%20x%20-%20w%20**%202%0A%0Adef%20puzzle%28y,%20z%29%3A%0A%20%20return%20y%5Bz%3A%5D%0A%0Aw%20%3D%20%22gingerbread%20man%22%0Aprint%28mystery%28w,%20-3%29%29%0A&amp;codeDivHeight=400&amp;codeDivWidth=350&amp;cumulative=false&amp;curInstr=0&amp;heapPrimitives=false&amp;origin=opt-frontend.js&amp;py=3&amp;rawInputLstJSON=%5B%5D&amp;textReferences=false">
+</iframe>
+</section>
 <section id="problem-1b-tracing" class="slide level2">
 <h2>Problem 1b: Tracing</h2>
 <ul>
 <li>What is printed at the end?</li>
 </ul>
-<pre ><code class="mypython" style="max-height:850px; font-size:.75em;">class Frosty:
+<pre ><code class="mypython" style="max-height:800px; font-size:.65em;">class Frosty:
   def __init__(self, n, c):
     self.wild = [c]
     self.n = n
@@ -82,6 +89,11 @@ f.snowball(1)
 A = f.cap()
 A.append(1)
 print(sum(f.cap()))</code></pre>
+</section>
+<section id="problem-1b-pythontutor-trace" class="slide level2">
+<h2>Problem 1b: PythonTutor Trace</h2>
+<iframe width="1600" height="600" frameborder="0" src="https://pythontutor.com/iframe-embed.html#code=class%20Frosty%3A%0A%20%20def%20__init__%28self,%20n,%20c%29%3A%0A%20%20%20%20self.wild%20%3D%20%5Bc%5D%0A%20%20%20%20self.n%20%3D%20n%0A%0A%20%20def%20snowball%28self,%20h%3D3%29%3A%0A%20%20%20%20self.n%20-%3D%20h%0A%20%20%20%20self.wild%20%2B%3D%20%5Bself.n%5D%0A%0A%20%20def%20cap%28self%29%3A%0A%20%20%20%20return%20self.wild%0A%0Af%20%3D%20Frosty%288,%2015%29%0Af.snowball%28%29%0Af.snowball%281%29%0AA%20%3D%20f.cap%28%29%0AA.append%281%29%0Aprint%28sum%28f.cap%28%29%29%29&amp;codeDivHeight=400&amp;codeDivWidth=350&amp;cumulative=false&amp;curInstr=0&amp;heapPrimitives=false&amp;origin=opt-frontend.js&amp;py=3&amp;rawInputLstJSON=%5B%5D&amp;textReferences=false">
+</iframe>
 </section>
 <section id="problem-2-fundamentals" class="slide level2">
 <h2>Problem 2: Fundamentals</h2>
@@ -255,7 +267,42 @@ that will return this sum for any given file.</li>
 </section>
 <section id="problem-4---possible-solution" class="slide level2">
 <h2>Problem 4 - Possible Solution</h2>
-<pre ><code class="mypython"></code></pre>
+<pre ><code class="mypython" style="max-height:850px; font-size:.8em;">def process_file(filename):
+    """Opens and processes a file by finding the first and last
+    numbers on each line, taking the difference, and then summing
+    that difference over all lines.
+    """
+    diff_sum = 0
+    with open(filename) as fh:
+        for line in fh:
+            first = find_first(line)
+            last = find_last(line)
+            diff = first - last
+            diff_sum += diff
+    return diff_sum
+
+
+def find_first(line):
+    """Finds the first number to occur on a line."""
+    number = ""
+    i = 0
+    while not line[i].isdigit(): #find where num starts
+        i += 1
+    while line[i].isdigit(): #read num
+        number += line[i]
+        i += 1
+    return int(number)
+
+def find_last(line):
+    """Finds the last number to occur on a line."""
+    number = ""
+    i = len(line) - 1
+    while not line[i].isdigit(): #find where num starts
+        i -= 1
+    while line[i].isdigit(): #read num
+        number = line[i] + number
+        i -= 1
+    return int(number)</code></pre>
 </section>
 <section id="problem-5-defining-classes" class="slide level2">
 <h2>Problem 5: Defining Classes</h2>
@@ -290,11 +337,23 @@ P0
 >>> figures.next_label()
 P1</code></pre>
 </section>
+<section id="problem-5---possible-solution" class="slide level2">
+<h2>Problem 5 - Possible Solution</h2>
+<pre ><code class="mypython">class LabelGenerator:
+    def __init__(self, prefix, index=1):
+        self._prefix = prefix
+        self._index = index
+
+    def next_label(self):
+        output = f"{self._prefix}{self._index}"
+        self._index += 1
+        return output</code></pre>
+</section>
 <section id="problem-6-working-with-data-structures"
 class="slide level2">
 <h2>Problem 6: Working with Data Structures</h2>
 <div class="cols">
-<div class="col">
+<div class="col" style="font-size:.9em">
 <ul>
 <li>“Hunt the Wumpus” involves a player character and the fearsome
 Wumpus moving through a network of connected rooms, a small portion of
@@ -308,7 +367,7 @@ stored in a compound data structure, shown on the next page</li>
 <div class="col">
 <p><img
 data-src="./images/svg_cache/f47986ccf8f639343f425d6f478db0cb764ed99d.svg"
-style="width:100.0%" /></p>
+style="width:80.0%" /></p>
 </div>
 </div>
 </section>
@@ -355,6 +414,25 @@ player can smell the wumpus (is 2 or less rooms away) or
 <code class="python">False</code> otherwise</li>
 </ul></li>
 </ul>
+</section>
+<section id="problem-6---possible-solution" class="slide level2">
+<h2>Problem 6 - Possible Solution</h2>
+<pre ><code class="mypython" style="max-height:850px; font-size:.75em">def player_smells_a_wumpus(world_data):
+    """Returns true if a player is within two rooms of the wumpus in the
+    given world configuration file.
+    """
+    player_room = world_data["player"]
+    wumpus_room = world_data["wumpus"]
+    rooms = world_data["connections"]
+    if player_room == wumpus_room:
+        return True
+    for adjoining_room in rooms[player_room]:
+        if adjoining_room == wumpus_room: #one room away
+            return True
+        for second_adj_room in rooms[adjoining_room]:
+            if second_adj_room == wumpus_room: #two rooms away
+                return True
+    return False</code></pre>
 </section>
     </div>
   </div>

@@ -11,13 +11,14 @@ transition: fade
 css:
   - css/codetrace.css
   - css/roberts.css
+content_url: https://github.com/rembold-cs151-master/Section13
 ---
 
 
 ## Problem 1a: Tracing
 - Trace the below function to determine its output
 
-```mypython
+```{.mypython style='max-height:850px; font-size:.8em'}
 def mystery(x, y=10):
   z = len(x)
   return puzzle(x, y) + puzzle(w[:enigma(z, 3)], y)
@@ -32,10 +33,13 @@ w = "gingerbread man"
 print(mystery(w, -3))
 ```
 
+## Problem 1a: PythonTutor Trace
+<iframe width="1600" height="600" frameborder="0" src="https://pythontutor.com/iframe-embed.html#code=def%20mystery%28x,%20y%3D10%29%3A%0A%20%20z%20%3D%20len%28x%29%0A%20%20return%20puzzle%28x,%20y%29%20%2B%20puzzle%28w%5B%3Aenigma%28z,%203%29%5D,%20y%29%0A%0Adef%20enigma%28x,%20w%29%3A%0A%20%20return%20x%20-%20w%20**%202%0A%0Adef%20puzzle%28y,%20z%29%3A%0A%20%20return%20y%5Bz%3A%5D%0A%0Aw%20%3D%20%22gingerbread%20man%22%0Aprint%28mystery%28w,%20-3%29%29%0A&codeDivHeight=400&codeDivWidth=350&cumulative=false&curInstr=0&heapPrimitives=false&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false"> </iframe>
+
 ## Problem 1b: Tracing
 - What is printed at the end?
 
-```{.mypython style='max-height:850px; font-size:.75em;'}
+```{.mypython style='max-height:800px; font-size:.65em;'}
 class Frosty:
   def __init__(self, n, c):
     self.wild = [c]
@@ -55,6 +59,9 @@ A = f.cap()
 A.append(1)
 print(sum(f.cap()))
 ```
+
+## Problem 1b: PythonTutor Trace
+<iframe width="1600" height="600" frameborder="0" src="https://pythontutor.com/iframe-embed.html#code=class%20Frosty%3A%0A%20%20def%20__init__%28self,%20n,%20c%29%3A%0A%20%20%20%20self.wild%20%3D%20%5Bc%5D%0A%20%20%20%20self.n%20%3D%20n%0A%0A%20%20def%20snowball%28self,%20h%3D3%29%3A%0A%20%20%20%20self.n%20-%3D%20h%0A%20%20%20%20self.wild%20%2B%3D%20%5Bself.n%5D%0A%0A%20%20def%20cap%28self%29%3A%0A%20%20%20%20return%20self.wild%0A%0Af%20%3D%20Frosty%288,%2015%29%0Af.snowball%28%29%0Af.snowball%281%29%0AA%20%3D%20f.cap%28%29%0AA.append%281%29%0Aprint%28sum%28f.cap%28%29%29%29&codeDivHeight=400&codeDivWidth=350&cumulative=false&curInstr=0&heapPrimitives=false&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false"> </iframe>
 
 ## Problem 2: Fundamentals
 - The Racamán sequence starts at 0, termed $a_0$
@@ -202,8 +209,43 @@ s2ba#9don71abis012
 ::::::
 
 ## Problem 4 - Possible Solution
-```{.mypython}
+```{.mypython style='max-height:850px; font-size:.8em;'}
+def process_file(filename):
+    """Opens and processes a file by finding the first and last
+    numbers on each line, taking the difference, and then summing
+    that difference over all lines.
+    """
+    diff_sum = 0
+    with open(filename) as fh:
+        for line in fh:
+            first = find_first(line)
+            last = find_last(line)
+            diff = first - last
+            diff_sum += diff
+    return diff_sum
 
+
+def find_first(line):
+    """Finds the first number to occur on a line."""
+    number = ""
+    i = 0
+    while not line[i].isdigit(): #find where num starts
+        i += 1
+    while line[i].isdigit(): #read num
+        number += line[i]
+        i += 1
+    return int(number)
+
+def find_last(line):
+    """Finds the last number to occur on a line."""
+    number = ""
+    i = len(line) - 1
+    while not line[i].isdigit(): #find where num starts
+        i -= 1
+    while line[i].isdigit(): #read num
+        number = line[i] + number
+        i -= 1
+    return int(number)
 ```
 
 
@@ -230,17 +272,30 @@ P0
 P1
 ```
 
+## Problem 5 - Possible Solution
+```mypython
+class LabelGenerator:
+    def __init__(self, prefix, index=1):
+        self._prefix = prefix
+        self._index = index
+
+    def next_label(self):
+        output = f"{self._prefix}{self._index}"
+        self._index += 1
+        return output
+```
+
 
 ## Problem 6: Working with Data Structures
 ::::::cols
-::::col
+::::{.col style='font-size:.9em'}
 - "Hunt the Wumpus" involves a player character and the fearsome Wumpus moving through a network of connected rooms, a small portion of which is shown to the right
 - A Wumpus is very smelly, and a player can smell the Wumpus from two rooms away
 - Player and Wumpus location, as well as the rooms connectivity, is stored in a compound data structure, shown on the next page
 ::::
 
 ::::col
-\begin{tikzpicture}%%width=100%
+\begin{tikzpicture}%%width=80%
 [room/.style = {draw, white, very thick, circle, minimum size=1cm, label={[label distance=-4.5mm, white]90:{\scriptsize #1}}}, font=\bf]
 \node[room=2] (2) at (0,0) {P};
 \node[room=3] (3) at ($(2)+(0:2)$) {};
@@ -298,3 +353,24 @@ cave = {
 ## Problem 6 - Your Task
 - Write a predicate function called `player_smells_a_wumpus(world_data)` which takes in a dictionary describing the world data (`cave` in the previous page example).
   - Your function should return `True` if the player can smell the wumpus (is 2 or less rooms away) or `False` otherwise
+
+
+## Problem 6 - Possible Solution
+```{.mypython style='max-height:850px; font-size:.75em'}
+def player_smells_a_wumpus(world_data):
+    """Returns true if a player is within two rooms of the wumpus in the
+    given world configuration file.
+    """
+    player_room = world_data["player"]
+    wumpus_room = world_data["wumpus"]
+    rooms = world_data["connections"]
+    if player_room == wumpus_room:
+        return True
+    for adjoining_room in rooms[player_room]:
+        if adjoining_room == wumpus_room: #one room away
+            return True
+        for second_adj_room in rooms[adjoining_room]:
+            if second_adj_room == wumpus_room: #two rooms away
+                return True
+    return False
+```
