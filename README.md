@@ -1,2 +1,2 @@
-# section_template
-A template file for generating slides and content for a section meeting
+# Section 13: Final Prep
+Section materials for reviewing the first practice final exam
